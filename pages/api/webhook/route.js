@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { sendMessageWithButtons } from "@/services/telegram_service"; // Fungsi fetch kamu
 import { startCommand } from "@/utils/commands/start";
-
+import { sendMessageWithButtons } from "@/utils/telegram";
+// sendMessageWithButtons
 export async function POST(req) {
     const buttons = [
         [
