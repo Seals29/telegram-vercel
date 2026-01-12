@@ -75,3 +75,20 @@ export async function sendMessageWithButtons(chatid, text, buttons =[]) {
         }
     }
 }
+
+export async function deleteMessage(chatId, messageId) {
+    const url = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/deleteMessage`;
+    
+    try {
+        await fetch(url, {
+            method: "POST",
+            headers: { 'Content-type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: chatId,
+                message_id: messageId
+            })
+        });
+    } catch (err) {
+        console.error("Gagal menghapus pesan:", err);
+    }
+}

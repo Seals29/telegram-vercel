@@ -1,5 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
+import { answerCallbackQuery } from "@/utils/answerCallback";
 import { cricketCommand } from "@/utils/commands/cricket";
 import { helpCommand } from "@/utils/commands/help";
 import { pingCommand } from "@/utils/commands/ping";
@@ -55,6 +56,9 @@ export default async function handler(req, res) {
       await answerCallbackQuery(callback.id);
 
       if (callbackData === "cek_status") {
+        if (chatId && messageId) {
+            await deleteMessage(chatId, messageId);
+        }
         await sendMessage(chatId, `📊 Status untuk ${username}: Member Free`);
       } 
       
