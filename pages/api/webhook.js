@@ -3,7 +3,9 @@
 import { cricketCommand } from "@/utils/commands/cricket";
 import { helpCommand } from "@/utils/commands/help";
 import { pingCommand } from "@/utils/commands/ping";
+import { startCommand } from "@/utils/commands/start";
 import { sendMessage } from "@/utils/telegram";
+
 
 export const config = {
   maxDuration: 60,
@@ -15,8 +17,34 @@ export default async function handler(req, res) {
     const text = req.body.message.text;
     console.log("ChatID", chatId);
     console.log("text", text);
-    if (text.startsWith("/start") || text.startsWith("/help") ) {
-      await helpCommand(chatId)
+    if (text.startsWith("/start")) {
+      const args = text.split(' ').slice(1); // Get parameters after /start
+      buttons = [
+          [
+            { 
+              text: "Join GRUP Drama SUB OFFICIAL", 
+              url: "https://t.me/dramasub_indo" 
+            },
+          ],
+          [
+            { 
+              text: "👤 Status", 
+              callback_data: `status_utama` 
+            },
+          ],
+          [
+            { 
+              text: "🎬 List Drama", 
+              url: "https://t.me/dramasub_indo"
+            },
+            { 
+              text: "💸Cari Cuan", 
+              callback_data:"cari_cuan"
+            }
+          ],
+
+        ]
+      await startCommand(chatId,buttons)
     }
     else if (text.startsWith("/ping")){
       await pingCommand(chatId);
