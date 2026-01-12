@@ -18,34 +18,10 @@ export default async function handler(req, res) {
     console.log(req.body.message.from);
     console.log("ChatID", chatId);
     console.log("text", text);
-    const username = "User";
+    const username = req.body.message.from.username;
     if (text.startsWith("/start")) {
       const args = text.split(' ').slice(1); // Get parameters after /start
-      buttons = [
-          [
-            { 
-              text: "Join GRUP Drama SUB OFFICIAL", 
-              url: "https://t.me/dramasub_indo" 
-            },
-          ],
-          [
-            { 
-              text: "👤 Status", 
-              callback_data: `status_utama` 
-            },
-          ],
-          [
-            { 
-              text: "🎬 List Drama", 
-              url: "https://t.me/dramasub_indo"
-            },
-            { 
-              text: "💸Cari Cuan", 
-              callback_data:"cari_cuan"
-            }
-          ],
 
-        ]
       await startCommand(chatId,buttons,username)
     }
     else if (text.startsWith("/ping")){
