@@ -36,21 +36,21 @@ export async function sendVideoByParam(chatId, videoSlug, part, userId) {
     const botUsername = "dramasubidbot"; // Ganti dengan username bot kamu tanpa @
 
     // Tombol PREV (Hanya muncul jika part > 1)
-    if (currentPart > 1) {
+    if (part > 1) {
         navRow.push({
             text: "⬅️ Prev",
             url: `https://t.me/${botUsername}?start=${videoSlug}_part_${
-                currentPart - 1
+                part - 1
             }`,
         });
     }
 
     // Tombol NEXT (Hanya muncul jika part < totalParts)
-    if (currentPart < totalParts) {
+    if (part < totalParts) {
         navRow.push({
             text: "Next ➡️",
             url: `https://t.me/${botUsername}?start=${videoSlug}_part_${
-                currentPart + 1
+                part + 1
             }`,
         });
     }
