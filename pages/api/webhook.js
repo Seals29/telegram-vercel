@@ -17,6 +17,7 @@ export default async function handler(req, res) {
     const text = req.body.message.text;
     console.log("ChatID", chatId);
     console.log("text", text);
+    const username = req.from.username || req.from.first_name|| "User";
     if (text.startsWith("/start")) {
       const args = text.split(' ').slice(1); // Get parameters after /start
       buttons = [
@@ -44,7 +45,7 @@ export default async function handler(req, res) {
           ],
 
         ]
-      await startCommand(chatId,buttons)
+      await startCommand(chatId,buttons,username)
     }
     else if (text.startsWith("/ping")){
       await pingCommand(chatId);
