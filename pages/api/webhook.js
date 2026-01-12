@@ -47,7 +47,7 @@ export default async function handler(req, res) {
             ];
 
             if (text.startsWith("/start")) {
-                await startCommand(chatId, buttons, username);
+                await startCommand(chatId, username);
             } else if (text.startsWith("/ping")) {
                 await pingCommand(chatId);
             } else if (text.startsWith("/cricket")) {
@@ -69,12 +69,14 @@ export default async function handler(req, res) {
 
             // Wajib jawab callback agar loading berhenti
             // Pastikan kamu punya fungsi answerCallbackQuery di utils/telegram
+            if (chatId && messageId) {
+                await deleteMessage(chatId, messageId);
+            }
             await answerCallbackQuery(callback.id);
-
+            if (callbackData === "start_menu") {
+                await startCommand(chatId,username)
+            }
             if (callbackData === "cek_status") {
-                if (chatId && messageId) {
-                    await deleteMessage(chatId, messageId);
-                }
                 let text = `
         👤 Status Akun Kamu
 
@@ -91,10 +93,24 @@ export default async function handler(req, res) {
                 if (!vips) {
                     text = `❌ **MEMBER FREE**\nSilakan hubungi @Seal2929 untuk upgrade.`;
                 }
-                await sendMessageWithButtons(
-                    chatId,
-                    `📊 Status untuk ${username}: Member Free`
-                );
+                await sendMessageWithButtons(chatId, text, [
+                    [
+                        {
+                            text: "BELI VIP SEKARANG",
+                            url: "https://t.me/dramasub_indo",
+                        },
+                        {
+                            text: "Bantuan Membeli VIP",
+                            url: "https://t.me/dramasub_indo",
+                        },
+                    ],
+                    [
+                        {
+                            text: "Kembali",
+                            callback_data: "start_menu",
+                        },
+                    ],
+                ]);
             } else if (callbackData === "cari_cuan") {
                 await sendMessage(
                     chatId,
