@@ -7,6 +7,7 @@ export async function executeQuery({ query, values = [] }) {
             database: "dracin_bot",
             user: "user_bot",
             password: "userpassword",
+            port: 3306,
             connectTimeout: 10000, // Tambahkan timeout 10 detik
         });
 
