@@ -19,6 +19,30 @@ export default async function handler(req, res) {
     console.log("ChatID", chatId);
     console.log("text", text);
     const username = req.body.message.from.username;
+    const buttons = [
+        [
+            {
+                text: "Join GRUP Drama SUB OFFICIAL",
+                url: "https://t.me/dramasub_indo",
+            },
+        ],
+        [
+            {
+                text: "👤 Status",
+                callback_data: `cek_status`,
+            },
+        ],
+        [
+            {
+                text: "🎬 List Drama",
+                url: "https://t.me/dramasub_indo",
+            },
+            {
+                text: "💸Cari Cuan",
+                callback_data: "cari_cuan",
+            },
+        ],
+    ];
     if (text.startsWith("/start")) {
       const args = text.split(' ').slice(1); // Get parameters after /start
 
