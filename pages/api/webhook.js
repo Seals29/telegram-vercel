@@ -15,9 +15,10 @@ export default async function handler(req, res) {
   if (req.method=="POST") {
     const chatId = req.body.message.chat.id;
     const text = req.body.message.text;
+    console.log(req);
     console.log("ChatID", chatId);
     console.log("text", text);
-    const username = req.from.username || req.from.first_name|| "User";
+    const username = "User";
     if (text.startsWith("/start")) {
       const args = text.split(' ').slice(1); // Get parameters after /start
       buttons = [
