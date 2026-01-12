@@ -49,7 +49,9 @@ export default async function handler(req, res) {
                 ],
             ];
             const userMessageId = body.message.message_id;
-            await deleteMessage(chatId, userMessageId);
+            console.log(body);
+            
+            // await deleteMessage(chatId, userMessageId);
             if (text.startsWith("/start")) {
                 const args = text.split(" ");
                 console.log(args);
