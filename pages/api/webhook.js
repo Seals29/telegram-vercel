@@ -15,7 +15,7 @@ export default async function handler(req, res) {
   if (req.method=="POST") {
     const chatId = req.body.message.chat.id;
     const text = req.body.message.text;
-    console.log(req);
+    console.log(req.body.message.from);
     console.log("ChatID", chatId);
     console.log("text", text);
     const username = "User";
