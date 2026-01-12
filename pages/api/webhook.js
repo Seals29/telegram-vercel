@@ -70,7 +70,7 @@ export default async function handler(req, res) {
                     } catch (error) {
                         await sendMessage(
                             chatId,
-                            "⚠️ Parameter video tidak valid."
+                            `⚠️ Parameter video tidak valid. ${error}}`
                         );
                     }
                 }
