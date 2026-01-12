@@ -1,16 +1,18 @@
-import mysql from 'mysql2/promise';
+import mysql from "mysql2/promise";
 
 export async function executeQuery({ query, values = [] }) {
-    const dbconnection = await mysql.createConnection({
-        host: "20.24.229.197", 
-        database: "dracin_bot",
-        user: "user_bot",
-        password: "userpassword", 
-    });
-
     try {
-        const [results] = await dbconnection.execute(query, values);
-        dbconnection.end();
+        const dbconnection = await mysql.createConnection({
+            host: "20.24.229.197",
+            database: "dracin_bot",
+            user: "user_bot",
+            password: "userpassword",
+            connectTimeout: 10000, // Tambahkan timeout 10 detik
+        });
+
+        console.log("Koneksi berhasil!");
+        const [results] = await dbconnection.execute(sql, params);
+        await dbconnection.end();
         return results;
     } catch (error) {
         throw Error(error.message);
