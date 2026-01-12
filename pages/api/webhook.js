@@ -5,7 +5,7 @@ import { cricketCommand } from "@/utils/commands/cricket";
 import { helpCommand } from "@/utils/commands/help";
 import { pingCommand } from "@/utils/commands/ping";
 import { startCommand } from "@/utils/commands/start";
-import { sendMessage } from "@/utils/telegram";
+import { deleteMessage, sendMessage } from "@/utils/telegram";
 
 export const config = {
     maxDuration: 60,
