@@ -1,21 +1,25 @@
-import mysql from "mysql2/promise";
+import mysql from 'mysql2/promise';
 
-export async function executeQuery({ query, values = [] }) {
+// Buat pool di luar fungsi agar bisa digunakan kembali (reuse)
+const pool = mysql.createPool({
+    host: "20.24.229.197",
+    user: "user_bot",
+    password: "userpassword",
+    database: "dracin_bot",
+    port: 3306,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+    connectTimeout: 20000 // Beri waktu lebih untuk koneksi VPS
+});
+
+export async function executeQuery(sql, params) {
     try {
-        const dbconnection = await mysql.createConnection({
-            host: "20.24.229.197",
-            database: "dracin_bot",
-            user: "user_bot",
-            password: "userpassword",
-            port: 3306,
-            connectTimeout: 10000, // Tambahkan timeout 10 detik
-        });
-
-        console.log("Koneksi berhasil!");
-        const [results] = await dbconnection.execute(query, values);
-        await dbconnection.end();
+        // Pool.execute otomatis mengambil koneksi dan mengembalikannya ke pool
+        const [results] = await pool.execute(sql, params);
         return results;
     } catch (error) {
-        throw Error(error.message);
+        console.error("Database Error:", error.message);
+        throw error;
     }
 }
