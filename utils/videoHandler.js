@@ -7,16 +7,18 @@ export async function sendVideoByParam(chatId, videoSlug, part, userId) {
     // 1. Cek VIP
     console.log("xzcxz");
     
-    const isVip = await getVipStatus(userId);
-    if (!isVip) {
-        return await sendMessage(
-            chatId,
-            "❌ Akses Ditolak. Link ini hanya untuk member VIP aktif."
-        );
-    }
+    // const isVip = await getVipStatus(userId);
+    // if (!isVip) {
+    //     return await sendMessage(
+    //         chatId,
+    //         "❌ Akses Ditolak. Link ini hanya untuk member VIP aktif."
+    //     );
+    // }
 
     // 2. Ambil data video dari database
     const video = await getVideoData(videoSlug, part);
+    console.log("berhasil", video);
+    
     if (!video) {
         return await sendMessage(
             chatId,
