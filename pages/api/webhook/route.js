@@ -29,7 +29,30 @@ export async function POST(req) {
     ];
     try {
         const body = await req.json();
-
+        const buttons = [
+            [
+                {
+                    text: "Join GRUP Drama SUB OFFICIAL",
+                    url: "https://t.me/dramasub_indo",
+                },
+            ],
+            [
+                {
+                    text: "👤 Status",
+                    callback_data: `cek_status`,
+                },
+            ],
+            [
+                {
+                    text: "🎬 List Drama",
+                    url: "https://t.me/dramasub_indo",
+                },
+                {
+                    text: "💸Cari Cuan",
+                    callback_data: "cari_cuan",
+                },
+            ],
+        ];
         // --- 1. JIKA YANG MASUK ADALAH PESAN TEKS (/start, dll) ---
         if (body.message) {
             const msg = body.message;
@@ -37,7 +60,7 @@ export async function POST(req) {
             const text = msg.text;
             const username = msg.username;
             if (text === "/start") {
-                await startCommand(chatId,buttons,username)
+                await startCommand(chatId, buttons, username);
             }
         }
 
@@ -58,7 +81,30 @@ export async function POST(req) {
                     [{ text: "◀️ Kembali", callback_data: "menu_utama" }],
                 ]);
             }
-
+            const buttons = [
+                [
+                    {
+                        text: "Join GRUP Drama SUB OFFICIAL",
+                        url: "https://t.me/dramasub_indo",
+                    },
+                ],
+                [
+                    {
+                        text: "👤 Status",
+                        callback_data: `cek_status`,
+                    },
+                ],
+                [
+                    {
+                        text: "🎬 List Drama",
+                        url: "https://t.me/dramasub_indo",
+                    },
+                    {
+                        text: "💸Cari Cuan",
+                        callback_data: "cari_cuan",
+                    },
+                ],
+            ];
             if (callbackData === "menu_utama") {
                 // Kamu bisa kirim ulang menu atau gunakan editMessageText
                 await startCommand(chatId, buttons, username);
