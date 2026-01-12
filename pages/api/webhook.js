@@ -75,7 +75,7 @@ export default async function handler(req, res) {
                 if (chatId && messageId) {
                     await deleteMessage(chatId, messageId);
                 }
-                const text = `
+                let text = `
         👤 Status Akun Kamu
 
         🆔 User ID: ${callback.from?.id || "Failed"}
@@ -88,9 +88,7 @@ export default async function handler(req, res) {
         Jika ada pertanyaan silahkan chat admin @Seal2929
         `;
                 const vips = getSubscriberStatus(callback.from?.id);
-                if (vips) {
-                    text = `👑 **VIP AKTIF**\nExpired: ${userData.expired_date}`;
-                } else {
+                if (!vips) {
                     text = `❌ **MEMBER FREE**\nSilakan hubungi @Seal2929 untuk upgrade.`;
                 }
                 await sendMessageWithButtons(
