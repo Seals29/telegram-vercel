@@ -12,7 +12,7 @@ export async function executeQuery({ query, values = [] }) {
         });
 
         console.log("Koneksi berhasil!");
-        const [results] = await dbconnection.execute(sql, params);
+        const [results] = await dbconnection.execute(query, values);
         await dbconnection.end();
         return results;
     } catch (error) {
