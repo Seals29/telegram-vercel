@@ -13,6 +13,8 @@ export const config = {
 
 export default async function handler(req, res) {
   if (req.method=="POST") {
+    console.log("logs", req.body);
+    
     const chatId = req.body.message.chat.id;
     const text = req.body.message.text;
     console.log(req.body.message.from);

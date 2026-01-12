@@ -58,7 +58,7 @@ export async function POST(req) {
             const msg = body.message;
             const chatId = msg.chat.id;
             const text = msg.text;
-            const username = msg.username;  
+            const username = msg.username;
             if (text === "/start") {
                 await startCommand(chatId, buttons, username);
             }
@@ -66,11 +66,17 @@ export async function POST(req) {
 
         // --- 2. JIKA YANG MASUK ADALAH KLIK TOMBOL (Callback Query) ---
         if (body.callback_query) {
-            console.log(body.callback_query)
+            console.log(body.callback_query);
             const callback = body.callback_query;
             const callbackData = callback.data; // Ini isi dari callback_data di tombol
-            const chatId = callback.message.chat.id;
-            const messageId = callback.message.message_id; // Untuk edit/hapus pesan lama
+            const chatId = callback.message?.chat?.id;
+            const messageId = callback.message?.message_id;
+
+            // Pastikan chatId ada sebelum lanjut
+            if (!chatId) {
+                console.error("Chat ID tidak ditemukan dalam callback_query");
+                return Response.json({ ok: true });
+            }
             const username = callback.from.username || "User";
 
             // WAJIB: Jawab callback query agar loading di Telegram berhenti
@@ -85,7 +91,7 @@ export async function POST(req) {
             const buttons = [
                 [
                     {
-                        text: "Join GRUP Drama SUB OFFICIAL",
+                        text: "Join GRUP2 Drama SUB OFFICIAL",
                         url: "https://t.me/dramasub_indo",
                     },
                 ],
