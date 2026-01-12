@@ -5,6 +5,8 @@ import { sendVideo, sendMessage } from "@/utils/telegram";
 
 export async function sendVideoByParam(chatId, videoSlug, part, userId) {
     // 1. Cek VIP
+    console.log("xzcxz");
+    
     const isVip = await getVipStatus(userId);
     if (!isVip) {
         return await sendMessage(
@@ -21,6 +23,8 @@ export async function sendVideoByParam(chatId, videoSlug, part, userId) {
             "⚠️ Video tidak ditemukan di database."
         );
     }
+    console.log(video);
+    
     const totalParts = video.total_parts;
     const cleanName = video.video_name.replace(/_/g, " ").toUpperCase();
     const caption = `🎬 **${video.video_name
