@@ -23,7 +23,9 @@ export default async function handler(req, res) {
 
         // --- 1. LOGIKA JIKA TERIMA PESAN TEKS ---
         if (body.message) {
+            
             const chatId = body.message.chat.id;
+            
             const text = body.message.text || "";
             const username =
                 body.message.from?.username ||
@@ -46,11 +48,12 @@ export default async function handler(req, res) {
                     { text: "💸Cari Cuan", callback_data: "cari_cuan" },
                 ],
             ];
-
+            const userMessageId = body.message.message_id;
+            await deleteMessage(chatId, userMessageId);
             if (text.startsWith("/start")) {
                 const args = text.split(" ");
                 console.log(args);
-
+                
                 if (args.length > 1) {
                     const param = args[1]; 
 
@@ -73,8 +76,9 @@ export default async function handler(req, res) {
                             `⚠️ Parameter video tidak valid. ${error}}`
                         );
                     }
+                }else{
+                    await startCommand(chatId, username);
                 }
-                await startCommand(chatId, username);
             } else if (text.startsWith("/ping")) {
                 await pingCommand(chatId);
             } else if (text.startsWith("/cricket")) {
