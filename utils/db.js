@@ -1,6 +1,6 @@
 import mysql from 'mysql2/promise';
 
-export async function query({ query, values = [] }) {
+export async function executeQuery({ query, values = [] }) {
     const dbconnection = await mysql.createConnection({
         host: "20.24.229.197", 
         database: "dracin_bot",
