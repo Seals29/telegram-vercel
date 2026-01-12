@@ -27,7 +27,7 @@ export async function sendVideoByParam(chatId, videoSlug, part, userId) {
         .replace(/_/g, " ")
         .toUpperCase()}**\n📌 Part: ${part}`;
     let navRow = [];
-    const botUsername = "dramasub_bot"; // Ganti dengan username bot kamu tanpa @
+    const botUsername = "dramasubidbot"; // Ganti dengan username bot kamu tanpa @
 
     // Tombol PREV (Hanya muncul jika part > 1)
     if (currentPart > 1) {

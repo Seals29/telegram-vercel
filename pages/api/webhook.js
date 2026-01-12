@@ -11,6 +11,7 @@ import {
     sendMessage,
     sendMessageWithButtons,
 } from "@/utils/telegram";
+import { sendVideoByParam } from "@/utils/videoHandler";
 
 export const config = {
     maxDuration: 60,
