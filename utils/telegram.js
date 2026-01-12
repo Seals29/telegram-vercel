@@ -92,3 +92,37 @@ export async function deleteMessage(chatId, messageId) {
         console.error("Gagal menghapus pesan:", err);
     }
 }
+
+
+export async function sendVideo(chatId, videoFileId, caption, buttons = []) {
+    const url = `${TELEGRAM_API_URL}/sendVideo`;
+
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                chat_id: chatId,
+                video: videoFileId, // ID video dari Telegram (bukan URL file lokal)
+                caption: caption,
+                parse_mode: "Markdown",
+                reply_markup: {
+                    inline_keyboard: buttons
+                }
+            })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.text();
+            console.error(`[Telegram Video Error] ${errorData}`);
+            return false;
+        }
+
+        return true;
+    } catch (err) {
+        console.error("### ERROR SENDING VIDEO ###", err.message);
+        return false;
+    }
+}

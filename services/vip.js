@@ -1,7 +1,7 @@
 import { executeQuery } from "@/utils/db";
 
 // Fungsi untuk cek status VIP
-export async function getSubscriberStatus(userId) {
+export async function getVipStatus(userId) {
     const sql = "SELECT * FROM vips WHERE user_id = ? LIMIT 1";
     const results = await executeQuery(sql, [userId]);
     return results[0]; 

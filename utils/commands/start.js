@@ -14,14 +14,35 @@ Silakan pilih menu di bawah ini:`;
                 url: "https://t.me/dramasub_indo",
             },
         ],
-        [{ text: "👤 Status", callback_data: `cek_status` }],
+        [
+            { 
+                text: "👤 Status", 
+                callback_data: `cek_status` 
+            }
+        ],
         [
             {
                 text: "🎬 List Drama",
-                url: "https://t.me/dramasub_indo",
+                callback_data: "menu_vip",
             },
-            { text: "💸Cari Cuan", callback_data: "cari_cuan" },
         ],
+        [
+            {
+                text: "💎 BELI VIP",
+                callback_data: "menu_vip",
+            },
+            { 
+                text: "📝 Request Drama", 
+                callback_data: "request_drama" 
+            },
+        ],
+        [
+            {
+                text: "HUBUNGI KAMI",
+                url: "https://t.me/Seals2929",
+            },
+        ],
+
     ];
     await sendMessageWithButtons(chatId, text, buttons);
 }

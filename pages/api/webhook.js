@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-import { getSubscriberStatus } from "@/services/vip";
+import { getVipStatus } from "@/services/vip";
 import { answerCallbackQuery } from "@/utils/answerCallback";
 import { cricketCommand } from "@/utils/commands/cricket";
 import { helpCommand } from "@/utils/commands/help";
@@ -47,6 +47,32 @@ export default async function handler(req, res) {
             ];
 
             if (text.startsWith("/start")) {
+                const args = text.split(" ");
+                console.log(args);
+
+                if (args.length > 1) {
+                    const param = args[1]; 
+
+                    try {
+                        // Parsing parameter (Logika yang sama dengan bot Python kamu)
+                        const parts = param.split("_part_");
+                        const cleanVideoName = parts[0];
+                        const partNumber = parseInt(parts[1]) || 1;
+
+                        // Panggil fungsi kirim video (Buat fungsi ini di utils/telegram atau commands)
+                        await sendVideoByParam(
+                            chatId,
+                            cleanVideoName,
+                            partNumber,
+                            body.message.from.id
+                        );
+                    } catch (error) {
+                        await sendMessage(
+                            chatId,
+                            "⚠️ Parameter video tidak valid."
+                        );
+                    }
+                }
                 await startCommand(chatId, username);
             } else if (text.startsWith("/ping")) {
                 await pingCommand(chatId);
@@ -74,7 +100,7 @@ export default async function handler(req, res) {
             }
             await answerCallbackQuery(callback.id);
             if (callbackData === "start_menu") {
-                await startCommand(chatId,username)
+                await startCommand(chatId, username);
             }
             if (callbackData === "cek_status") {
                 let text = `
@@ -89,7 +115,7 @@ export default async function handler(req, res) {
 
         Jika ada pertanyaan silahkan chat admin @Seal2929
         `;
-                const vips = getSubscriberStatus(callback.from?.id);
+                const vips = getVipStatus(callback.from?.id);
                 if (!vips) {
                     text = `❌ **MEMBER FREE**\nSilakan hubungi @Seal2929 untuk upgrade.`;
                 }
