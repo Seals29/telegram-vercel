@@ -71,6 +71,6 @@ export async function vipCommand(chatId) {
     ];
     await sendMessageWithButtons(chatId, "Pilih paket langganan:", buttons);
 }
-export async function vipCommand(chatId) {
+export async function vipCommand3(chatId) {
     await sendMessageWithButtons(chatId, "Pilih paket langganan:", buttons);
 }
