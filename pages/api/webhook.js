@@ -10,6 +10,7 @@ import {
     deleteMessage,
     sendMessage,
     sendMessageWithButtons,
+    sendPhoto,
 } from "@/utils/telegram";
 import { sendVideoByParam } from "@/utils/videoHandler";
 
@@ -97,8 +98,8 @@ export default async function handler(req, res) {
             const messageId = callback.message?.message_id;
             const username = callback.from?.username || "User";
             console.log("zxc");
-            const userId = callback.from.id
-            
+            const userId = callback.from.id;
+
             // Wajib jawab callback agar loading berhenti
             // Pastikan kamu punya fungsi answerCallbackQuery di utils/telegram
             if (chatId && messageId) {
@@ -155,7 +156,7 @@ export default async function handler(req, res) {
 
                 // 2. Jalankan fungsi kirim video
                 // userId didapat dari body.callback_query.from.id
-                // const userId = 
+                // const userId =
                 const userId = callback.from?.id;
                 await sendVideoByParam(chatId, videoSlug, partNum, userId);
 
@@ -164,6 +165,54 @@ export default async function handler(req, res) {
                     await deleteMessage(chatId, messageId);
                 } catch (e) {
                     console.log("Gagal hapus pesan: ", e.message);
+                }
+            } else if (callbackData.includes("beli_vip")) {
+                const [test, day] = callbackData.split("_vip_");
+                let pizzas = 2;
+                if (day == 2) {
+                    pizzas = 3;
+                }
+                const usernameT = callback.from?.username;
+                const params = new URLSearchParams({
+                    method: method,
+                    pizzas: pizzas,
+                    display_name: usernameT,
+                    support_message: message,
+                });
+                // http://localhost:3000/api/trakteer?method=qris&pizzas=3&display_name=John%20Doe&support_message=Semangat%20terus!
+                const api_url = `http://localhost:3000/api/trakteer?${params.toString()}`;
+                try {
+                    const response = await fetch(api_url);
+
+                    if (!response.ok)
+                        throw new Error(
+                            `HTTP error! status: ${response.status}`
+                        );
+
+                    const data = await response.json();
+
+                    // Contoh cara akses output yang kamu minta:
+                    if (data[method]) {
+                        const paymentData = data[method];
+                        console.log("📸 QR String:", paymentData.qr_string);
+                        console.log("🔗 QR URL:", paymentData.qris_url);
+                        const qrImageUrl = `https://quickchart.io/qr?text=${encodeURIComponent(
+                            paymentData.qr_string
+                        )}&size=500&margin=2`;
+                        const caption = `
+                        ✅ QRIS Berhasil Dibuat!
+                        Silakan scan untuk membayar.
+                        💰 Nominal: Rp3.000
+                        🆔 ID Transaksi: 
+                        ⏳ Durasi VIP: 2 hari`;
+                        await sendPhoto(chat_id, qrImageUrl, caption);
+                        // Di sini kamu bisa kirim QR ke bot Telegram
+                    }
+                } catch (error) {
+                    console.error(
+                        "❌ Gagal memproses pembayaran:",
+                        error.message
+                    );
                 }
             }
         }

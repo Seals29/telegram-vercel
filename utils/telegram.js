@@ -126,3 +126,30 @@ export async function sendVideo(chatId, videoFileId, caption, buttons = []) {
         return false;
     }
 }
+
+export async function sendPhoto(chatId, photoUrl, caption) {
+    const TELEGRAM_API = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendPhoto`;
+
+    try {
+        const response = await fetch(TELEGRAM_API, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: chatId,
+                photo: photoUrl,
+                caption: caption,
+                parse_mode: "Markdown"
+            })
+        });
+
+        const result = await response.json();
+
+        if (!result.ok) {
+            console.error("❌ Telegram Error:", result.description);
+        }
+        return result;
+    } catch (error) {
+        console.error("❌ Gagal mengirim foto:", error.message);
+        throw error;
+    }
+}
