@@ -35,7 +35,7 @@ export async function vipCommand(chatId) {
     //     ],
     // ];
     
-    const webAppUrl = ""
+    const webAppUrl = "https://telegram-vercel-smoky.vercel.app/vip"
     const buttons = [
         [
             {
