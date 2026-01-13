@@ -156,6 +156,7 @@ export default async function handler(req, res) {
                 // 2. Jalankan fungsi kirim video
                 // userId didapat dari body.callback_query.from.id
                 // const userId = 
+                const userId = callback.from?.id;
                 await sendVideoByParam(chatId, videoSlug, partNum, userId);
 
                 // 3. (Opsional tapi disarankan) Hapus video lama agar tidak menumpuk
