@@ -184,7 +184,7 @@ export default async function handler(req, res) {
                     support_message: "aadasdas",
                 });
                 // http://localhost:3000/api/trakteer?method=qris&pizzas=3&display_name=John%20Doe&support_message=Semangat%20terus!
-                const api_url = `http://localhost:3000/api/trakteer?${params.toString()}`;
+                const api_url = `https://telegram-vercel-smoky.vercel.app/api/trakteer?${params.toString()}`;
                 try {
                     const response = await fetch(api_url);
 
