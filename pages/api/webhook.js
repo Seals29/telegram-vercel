@@ -96,7 +96,9 @@ export default async function handler(req, res) {
             const chatId = callback.message?.chat?.id;
             const messageId = callback.message?.message_id;
             const username = callback.from?.username || "User";
-
+            console.log("zxc");
+            
+            console.log(callback)
             // Wajib jawab callback agar loading berhenti
             // Pastikan kamu punya fungsi answerCallbackQuery di utils/telegram
             if (chatId && messageId) {
@@ -153,6 +155,7 @@ export default async function handler(req, res) {
 
                 // 2. Jalankan fungsi kirim video
                 // userId didapat dari body.callback_query.from.id
+                // const userId = 
                 await sendVideoByParam(chatId, videoSlug, partNum, userId);
 
                 // 3. (Opsional tapi disarankan) Hapus video lama agar tidak menumpuk
