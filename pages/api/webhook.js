@@ -168,14 +168,28 @@ export default async function handler(req, res) {
                     console.log("Gagal hapus pesan: ", e.message);
                 }
             } else if (callbackData.includes("menu_vip")) {
-                await vipCommand(chatId);
+                // await vipCommand(chatId);
+                const webAppUrl = "https://trakteer.id/checkout/xendit/qris/6dc394db-33c4-52ff-b2a7-97c230910e83"; // URL Website kamu
+
+                const text =
+                    "👋 Silakan buka Menu VIP melalui aplikasi di bawah ini:";
+                const buttons = [
+                    [
+                        {
+                            text: "🚀 Buka Web App VIP",
+                            web_app: { url: webAppUrl }, // Ini akan membuka website di dalam Telegram
+                        },
+                    ],
+                ];
+
+                await sendMessageWithButtons(chatId, text, buttons);
             } else if (callbackData.includes("beli_vip")) {
                 const [test, day] = callbackData.split("_vip_");
                 let pizzas = 2;
                 if (day == 2) {
                     pizzas = 3;
                 }
-                const method = "gopay"
+                const method = "gopay";
                 const usernameT = callback.from?.username;
                 const params = new URLSearchParams({
                     method: method,
@@ -185,6 +199,7 @@ export default async function handler(req, res) {
                 });
                 // http://localhost:3000/api/trakteer?method=qris&pizzas=3&display_name=John%20Doe&support_message=Semangat%20terus!
                 const api_url = `https://telegram-vercel-smoky.vercel.app/api/trakteer?${params.toString()}`;
+                // const headers =
                 try {
                     const response = await fetch(api_url);
 
