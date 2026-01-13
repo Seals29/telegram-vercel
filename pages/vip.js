@@ -37,24 +37,24 @@ const handlePayment = async (pkg) => {
 
             const data = await response.json();
             console.log("Response Data:", data);
-
+            window.Telegram.WebApp.openLink("https://trakteer.id/checkout/xendit/qris/f08efbf7-45ce-5fb5-b07c-40fc0f2460e8");
             // Cek apakah checkout_url tersedia
-            if (data.qris && data.qris.checkout_url) {
-                const targetUrl = data.qris.checkout_url;
+            // if (data.qris && data.qris.checkout_url) {
+            //     const targetUrl = data.qris.checkout_url;
 
-                if (window.Telegram?.WebApp) {
-                    // Cara terbaik untuk Telegram Web App (Membuka di browser HP)
-                    window.Telegram.WebApp.openLink(targetUrl);
+            //     if (window.Telegram?.WebApp) {
+            //         // Cara terbaik untuk Telegram Web App (Membuka di browser HP)
+            //         window.Telegram.WebApp.openLink(targetUrl);
                     
-                    // Opsional: Tutup webapp setelah buka link agar user kembali ke chat bot
-                    // window.Telegram.WebApp.close(); 
-                } else {
-                    // Fallback jika dibuka di browser biasa
-                    window.location.href = targetUrl;
-                }
-            } else {
-                throw new Error("Checkout URL tidak ditemukan");
-            }
+            //         // Opsional: Tutup webapp setelah buka link agar user kembali ke chat bot
+            //         // window.Telegram.WebApp.close(); 
+            //     } else {
+            //         // Fallback jika dibuka di browser biasa
+            //         window.location.href = targetUrl;
+            //     }
+            // } else {
+            //     throw new Error("Checkout URL tidak ditemukan");
+            // }
 
         } catch (error) {
             console.error("Payment Error:", error);
