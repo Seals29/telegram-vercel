@@ -175,12 +175,13 @@ export default async function handler(req, res) {
                 if (day == 2) {
                     pizzas = 3;
                 }
+                const method = "gopay"
                 const usernameT = callback.from?.username;
                 const params = new URLSearchParams({
                     method: method,
                     pizzas: pizzas,
                     display_name: usernameT,
-                    support_message: message,
+                    support_message: "aadasdas",
                 });
                 // http://localhost:3000/api/trakteer?method=qris&pizzas=3&display_name=John%20Doe&support_message=Semangat%20terus!
                 const api_url = `http://localhost:3000/api/trakteer?${params.toString()}`;
