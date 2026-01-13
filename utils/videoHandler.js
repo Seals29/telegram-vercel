@@ -6,7 +6,7 @@ import { sendVideo, sendMessage } from "@/utils/telegram";
 export async function sendVideoByParam(chatId, videoSlug, part, userId) {
     // 1. Cek VIP
     console.log("xzcxz");
-    
+
     // const isVip = await getVipStatus(userId);
     // if (!isVip) {
     //     return await sendMessage(
@@ -18,7 +18,7 @@ export async function sendVideoByParam(chatId, videoSlug, part, userId) {
     // 2. Ambil data video dari database
     const video = await getVideoData(videoSlug, part);
     console.log("berhasil", video);
-    
+
     if (!video) {
         return await sendMessage(
             chatId,
@@ -26,7 +26,7 @@ export async function sendVideoByParam(chatId, videoSlug, part, userId) {
         );
     }
     console.log(video);
-    
+
     const totalParts = video.total_parts;
     const cleanName = video.video_name.replace(/_/g, " ").toUpperCase();
     const caption = `🎬 **${video.video_name
@@ -39,9 +39,7 @@ export async function sendVideoByParam(chatId, videoSlug, part, userId) {
     if (part > 1) {
         navRow.push({
             text: "⬅️ Prev",
-            url: `https://t.me/${botUsername}?start=${videoSlug}_part_${
-                part - 1
-            }`,
+            callback_data: `${videoSlug}:${part - 1}`,
         });
     }
 
@@ -49,16 +47,12 @@ export async function sendVideoByParam(chatId, videoSlug, part, userId) {
     if (part < totalParts) {
         navRow.push({
             text: "Next ➡️",
-            url: `https://t.me/${botUsername}?start=${videoSlug}_part_${
-                part + 1
-            }`,
+            callback_data: `${videoSlug}:${part + 1}`,
         });
     }
-    const buttons = [
-        navRow
-    ];
+    const buttons = [navRow];
     // 3. Kirim Video
     console.log(video);
-    
+
     await sendVideo(chatId, video.video_id, caption, buttons);
 }

@@ -23,9 +23,8 @@ export default async function handler(req, res) {
 
         // --- 1. LOGIKA JIKA TERIMA PESAN TEKS ---
         if (body.message) {
-            
             const chatId = body.message.chat.id;
-            
+
             const text = body.message.text || "";
             const username =
                 body.message.from?.username ||
@@ -50,14 +49,12 @@ export default async function handler(req, res) {
             ];
             const userMessageId = body.message.message_id;
             console.log(body);
-            
-            await deleteMessage(chatId, userMessageId-1);
             if (text.startsWith("/start")) {
                 const args = text.split(" ");
                 console.log(args);
-                
+
                 if (args.length > 1) {
-                    const param = args[1]; 
+                    const param = args[1];
 
                     try {
                         // Parsing parameter (Logika yang sama dengan bot Python kamu)
@@ -78,7 +75,7 @@ export default async function handler(req, res) {
                             `⚠️ Parameter video tidak valid. ${error}}`
                         );
                     }
-                }else{
+                } else {
                     await startCommand(chatId, username);
                 }
             } else if (text.startsWith("/ping")) {
@@ -149,6 +146,21 @@ export default async function handler(req, res) {
                     chatId,
                     "💰 Fitur Cari Cuan akan segera hadir!"
                 );
+            } else if (callbackData.includes(":")) {
+                // 1. Pecah data berdasarkan titik dua
+                const [videoSlug, partStr] = callbackData.split(":");
+                const partNum = parseInt(partStr);
+
+                // 2. Jalankan fungsi kirim video
+                // userId didapat dari body.callback_query.from.id
+                await sendVideoByParam(chatId, videoSlug, partNum, userId);
+
+                // 3. (Opsional tapi disarankan) Hapus video lama agar tidak menumpuk
+                try {
+                    await deleteMessage(chatId, messageId);
+                } catch (e) {
+                    console.log("Gagal hapus pesan: ", e.message);
+                }
             }
         }
 
