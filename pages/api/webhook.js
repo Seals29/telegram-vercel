@@ -97,8 +97,8 @@ export default async function handler(req, res) {
             const messageId = callback.message?.message_id;
             const username = callback.from?.username || "User";
             console.log("zxc");
+            const userId = callback.from.id
             
-            console.log(callback)
             // Wajib jawab callback agar loading berhenti
             // Pastikan kamu punya fungsi answerCallbackQuery di utils/telegram
             if (chatId && messageId) {
