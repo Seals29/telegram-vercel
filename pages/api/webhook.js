@@ -132,6 +132,7 @@ export default async function handler(req, res) {
                         {
                             text: "BELI VIP SEKARANG",
                             url: "https://t.me/dramasub_indo",
+                            web_app: { url: webAppUrl }
                         },
                         {
                             text: "Bantuan Membeli VIP",
@@ -168,21 +169,21 @@ export default async function handler(req, res) {
                     console.log("Gagal hapus pesan: ", e.message);
                 }
             } else if (callbackData.includes("menu_vip")) {
-                // await vipCommand(chatId);
-                const webAppUrl = "https://trakteer.id/checkout/xendit/qris/6dc394db-33c4-52ff-b2a7-97c230910e83"; // URL Website kamu
+                await vipCommand(chatId);
+                // const webAppUrl = "https://trakteer.id/checkout/xendit/qris/6dc394db-33c4-52ff-b2a7-97c230910e83"; // URL Website kamu
 
-                const text =
-                    "👋 Silakan buka Menu VIP melalui aplikasi di bawah ini:";
-                const buttons = [
-                    [
-                        {
-                            text: "🚀 Buka Web App VIP",
-                            web_app: { url: webAppUrl }, // Ini akan membuka website di dalam Telegram
-                        },
-                    ],
-                ];
+                // const text =
+                //     "👋 Silakan buka Menu VIP melalui aplikasi di bawah ini:";
+                // const buttons = [
+                //     [
+                //         {
+                //             text: "🚀 Buka Web App VIP",
+                //             web_app: { url: webAppUrl }, // Ini akan membuka website di dalam Telegram
+                //         },
+                //     ],
+                // ];
 
-                await sendMessageWithButtons(chatId, text, buttons);
+                // await sendMessageWithButtons(chatId, text, buttons);
             } else if (callbackData.includes("beli_vip")) {
                 const [test, day] = callbackData.split("_vip_");
                 let pizzas = 2;
