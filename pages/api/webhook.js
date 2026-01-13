@@ -6,6 +6,7 @@ import { cricketCommand } from "@/utils/commands/cricket";
 import { helpCommand } from "@/utils/commands/help";
 import { pingCommand } from "@/utils/commands/ping";
 import { startCommand } from "@/utils/commands/start";
+import { vipCommand } from "@/utils/commands/vip";
 import {
     deleteMessage,
     sendMessage,
@@ -166,6 +167,8 @@ export default async function handler(req, res) {
                 } catch (e) {
                     console.log("Gagal hapus pesan: ", e.message);
                 }
+            } else if (callbackData.includes("menu_vip")) {
+                await vipCommand(chatId);
             } else if (callbackData.includes("beli_vip")) {
                 const [test, day] = callbackData.split("_vip_");
                 let pizzas = 2;
